@@ -113,21 +113,51 @@ class Dealer(Human):
         self.deck = deck
     def deal(self,player):
         self.cardtodeal = self.deck.cards.pop()
-        player.hit(self.cardtodeal)
+        cardstock = table.create_rectangle(100,300,225,500,fill='red',outline='black')
+        stockline = table.create_line(160,300,160,500,width=125,dash=(1,3))
+        xinc = ((player.cardpos[0] * 1400) - 100)/100
+        yinc = ((player.cardpos[1] * 800) - 300)/100
+        while True:
+            table.move(cardstock,xinc,yinc)
+            table.move(stockline,xinc,yinc)
+            casino.update()
+            time.sleep(.01)
+            dealtpos = table.coords(cardstock)
+            xl,yl,xr,yr = dealtpos
+            if abs((player.cardpos[0] * 1400 ) - xl) <= 20 and abs((player.cardpos[1] * 800) - yl) <= 20:
+                table.delete(cardstock)
+                table.delete(stockline)
+                player.hit(self.cardtodeal)
+                break
     def dealself(self):
         self.cardtodeal = (self.deck.cards.pop())
         cardimage = Card(self.cardtodeal)
         time.sleep(.2)
-        if len(self.cards):
-            self.cards.append(self.cardtodeal)
-            cardimage.display(self.cardpos)
-            self.cardpos[0] += .01
-            self.cardpos[1] += .05
-        else:
-            self.cards.append(self.cardtodeal)
-            cardimage.displayback(self.cardpos)
-            self.cardpos[0] += .01
-            self.cardpos[1] += .05
+        cardstock = table.create_rectangle(100,300,225,500,fill='red',outline='black')
+        stockline = table.create_line(160,300,160,500,width=125,dash=(1,3))
+        xinc = ((self.cardpos[0] * 1400) - 100)/100
+        yinc = ((self.cardpos[1] * 800) - 300)/100
+        while True:
+            table.move(cardstock,xinc,yinc)
+            table.move(stockline,xinc,yinc)
+            casino.update()
+            time.sleep(.01)
+            dealtpos = table.coords(cardstock)
+            xl,yl,xr,yr = dealtpos
+            if abs((self.cardpos[0] * 1400 ) - xl) <= 20 and abs((self.cardpos[1] * 800) - yl) <= 20:
+                table.delete(cardstock)
+                table.delete(stockline)
+                if len(self.cards):
+                    self.cards.append(self.cardtodeal)
+                    cardimage.display(self.cardpos)
+                    self.cardpos[0] += .01
+                    self.cardpos[1] += .05
+                else:
+                    self.cards.append(self.cardtodeal)
+                    cardimage.displayback(self.cardpos)
+                    self.cardpos[0] += .01
+                    self.cardpos[1] += .05
+                break
     def fliphole(self):
         invisicard = Canvas(table,background='green',highlightbackground='green',height=200,width=125)
         invisicard.place(in_=table,relx=.51,rely=.25,anchor=CENTER)
@@ -138,6 +168,7 @@ class Dealer(Human):
         cardimage.display(self.cardpos)
         self.cardpos[0] += .01
         self.cardpos[1] += .05
+
 
 class Player(Human):
     def __init__(self,name,game=None,dealer=None,cards=[],cardpos = [.5,.75],currentbet = 0,standing = False,winnings = 0):

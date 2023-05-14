@@ -34,6 +34,7 @@ def totals(cards):
             return set(acesums)
 
 ornaments = font.Font(family = 'Bodoni Ornaments',size=20)
+acefont = font.Font(family = 'Courier New',size=80)
 
 class Card:
     def __init__(self,name):
@@ -81,7 +82,7 @@ class Card:
                 if int(self.rank)%2 != 0:  
                     cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font= 'Batang 16 bold')
             else:
-                cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font= 'Batang 60 bold')
+                cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font= acefont)
     
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)
     def displayback(self,position):
@@ -122,7 +123,7 @@ class Dealer(Human):
             time.sleep(.01)
             dealtpos = table.coords(cardstock)
             xl,yl,xr,yr = dealtpos
-            if abs((player.cardpos[0] * 1400 ) - xl) <= 200:
+            if abs(700 - xl) <= 200:
                 table.delete(cardstock)
                 table.delete(stockline)
                 player.hit(self.cardtodeal)
@@ -141,7 +142,7 @@ class Dealer(Human):
             time.sleep(.01)
             dealtpos = table.coords(cardstock)
             xl,yl,xr,yr = dealtpos
-            if abs((self.cardpos[0] * 1400 ) - xl) <= 200:
+            if abs(700 - xl) <= 200:
                 table.delete(cardstock)
                 table.delete(stockline)
                 if len(self.cards):

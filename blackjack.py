@@ -86,9 +86,7 @@ class Card:
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)
     def displayback(self,position):
         cardstock = Canvas(table,bg='red',height=200,width=125)
-        for n in range(400):
-            if n % 7 == 0:
-                cardstock.create_line(0,n,n,0)
+        cardstock.create_line(65,0,65,200,width=125,dash=(1,3))
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)   
 
 class Deck:
@@ -124,7 +122,7 @@ class Dealer(Human):
             time.sleep(.01)
             dealtpos = table.coords(cardstock)
             xl,yl,xr,yr = dealtpos
-            if abs((player.cardpos[0] * 1400 ) - xl) <= 20 and abs((player.cardpos[1] * 800) - yl) <= 20:
+            if abs((player.cardpos[0] * 1400 ) - xl) <= 200:
                 table.delete(cardstock)
                 table.delete(stockline)
                 player.hit(self.cardtodeal)
@@ -132,7 +130,6 @@ class Dealer(Human):
     def dealself(self):
         self.cardtodeal = (self.deck.cards.pop())
         cardimage = Card(self.cardtodeal)
-        time.sleep(.2)
         cardstock = table.create_rectangle(100,300,225,500,fill='red',outline='black')
         stockline = table.create_line(160,300,160,500,width=125,dash=(1,3))
         xinc = ((self.cardpos[0] * 1400) - 100)/100
@@ -144,7 +141,7 @@ class Dealer(Human):
             time.sleep(.01)
             dealtpos = table.coords(cardstock)
             xl,yl,xr,yr = dealtpos
-            if abs((self.cardpos[0] * 1400 ) - xl) <= 20 and abs((self.cardpos[1] * 800) - yl) <= 20:
+            if abs((self.cardpos[0] * 1400 ) - xl) <= 200:
                 table.delete(cardstock)
                 table.delete(stockline)
                 if len(self.cards):
@@ -208,7 +205,6 @@ class Player(Human):
     def hit(self,card):
         self.cards.append(card)
         cardimage = Card(card)
-        time.sleep(.1)
         cardimage.display(self.cardpos)
         playerlabel.config(text=f"{self.name}\n\nCards:\n{', '.join(self.cards)}\nTotals:\n{totals(self.cards)}\nCurrent Bet:\n${self.currentbet}\nTotal Winnings: \n${self.winnings}")
         self.cardpos[0] += .01

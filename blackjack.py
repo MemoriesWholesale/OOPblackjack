@@ -14,7 +14,7 @@ table = Canvas(casino,height=800,width=1400,background='green',highlightbackgrou
 table.pack()
 
 playerlabel = Label(table,background='green',text='Player\n\nCards:\n?\nTotals:\n?\nCurrent Bet:\n?\nTotal Winnings: \n?')
-playerlabel.place(in_=table,relx=.3,rely=.65)
+playerlabel.place(in_=table,relx=.85,rely=.65)
 playerbox = Canvas(table,borderwidth=2,background='green',highlightbackground='white',height=225,width=150)
 playerbox.place(in_=table, relx=.45,rely=.6)
 
@@ -87,7 +87,7 @@ class Card:
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)
     def displayback(self,position):
         cardstock = Canvas(table,bg='red',height=200,width=125)
-        cardstock.create_line(65,0,65,200,width=125,dash=(1,3))
+        cardstock.create_line(65,0,65,205,width=125,dash=(1,3))
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)   
 
 class Deck:
@@ -134,7 +134,7 @@ class Dealer(Human):
         cardstock = table.create_rectangle(100,300,225,500,fill='red',outline='black')
         stockline = table.create_line(160,300,160,500,width=125,dash=(1,3))
         xinc = ((self.cardpos[0] * 1400) - 100)/100
-        yinc = ((self.cardpos[1] * 800) - 300)/100
+        yinc = ((self.cardpos[1] * 800) - 400)/100
         while True:
             table.move(cardstock,xinc,yinc)
             table.move(stockline,xinc,yinc)

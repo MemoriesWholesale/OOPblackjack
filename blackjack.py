@@ -9,14 +9,21 @@ import time
 casino = Tk()
 casino.title('Blackjack')
 casino.geometry('1400x800')
+style = Style()
+style.theme_use('classic')
 
 table = Canvas(casino,height=800,width=1400,background='green',highlightbackground='green')
 table.pack()
 
-playerlabel = Label(table,background='green',text='Player\n\nCards:\n?\nTotals:\n?\nCurrent Bet:\n?\nTotal Winnings: \n?')
-playerlabel.place(in_=table,relx=.85,rely=.65)
+playerlabel = Label(table,background='green',foreground='white',text='Player\n\nCards:\n?\nTotals:\n?\nCurrent Bet:\n?\nTotal Winnings: \n?',font='Futura 20 bold')
+playerlabel.place(in_=table,relx=.85,rely=.6)
 playerbox = Canvas(table,borderwidth=2,background='green',highlightbackground='white',height=225,width=150)
-playerbox.place(in_=table, relx=.45,rely=.6)
+playerbox.place(in_=table, relx=.45,rely=.65)
+roundcircle = table.create_oval(1200,300,1300,400,width=10)
+roundlabel = Label(table,background='green',foreground='white',text='Round\n    0',font='Futura 16 bold')
+roundlabel.place(x=1220,y=330)
+gametitle = Label(table,background='green',foreground='black',text='BLACKJACK',font='Phosphate 75')
+gametitle.place(x=1000,y=0)
 
 def totals(cards):
             basesum = 0
@@ -182,7 +189,7 @@ class Player(Human):
         betprompt.geometry('300x100')
         betprompt.title("Starting bet")
         betpromptframe = Frame(betprompt)
-        betpromptframe.pack()
+        betpromptframe.pack(fill=BOTH)
         betpromptlabel = Label(betpromptframe,text = f'Enter your bet, {self.name}')
         betpromptlabel.pack()
         betentry = Entry(betpromptframe)
@@ -241,6 +248,7 @@ class Game:
         self.currentround = currentround
     def newround(self):
         self.currentround += 1
+        roundlabel.config(text=f'Round\n    {self.currentround}')
         clearstrip = Canvas(table,background='green',highlightbackground='green',height=750,width=300)
         clearstrip.place(in_=table,relx=.45,rely=.05)
         cleanbottom = Canvas(table,background='green',highlightbackground='green',height=20,width=1400)
@@ -269,7 +277,7 @@ class Game:
                 okbtn.pack()
             else:
                 self.dealer.deal(player)
-        hitbutton = Button(table,text='Hit',command = lambda: tryhit(self.player))
+        hitbutton = Button(table,text='Hit',command = lambda: tryhit(self.player),width=60)
         hitbutton.place(relx=.75,rely=.8)
         def trystand(player):
             if len(player.cards) < 2:
@@ -284,7 +292,7 @@ class Game:
                 okbtn.pack()
             else:
                 player.stand()
-        standbutton = Button(table,text='Stand',command = lambda: trystand(self.player))
+        standbutton = Button(table,text='Stand',command = lambda: trystand(self.player),width=60)
         standbutton.place(relx=.75,rely=.85)
     def checkblackjack(self):
         time.sleep(.2)
@@ -408,7 +416,7 @@ newgamestart = Toplevel()
 newgamestart.geometry('300x100')
 newgamestart.title('New Game')
 startframe = Frame(newgamestart)
-startframe.pack()
+startframe.pack(fill=BOTH)
 startlabel = Label(startframe,text = 'Enter your name')
 startlabel.pack()
 nameentry = Entry(startframe)

@@ -203,7 +203,7 @@ class Player(Human):
             self.dealer.dealself()
             deckimage = Card('this is the deck')
             for n in range(48):
-                pos = [(.05+(.0003*n)),(.15+(.0009*n))]
+                pos = [(.07+(.0003*n)),(.17+(.0009*n))]
                 deckimage.displayback(pos)
             playerlabel.config(text=f"{self.name}\n\nCards:\n{', '.join(self.cards)}\nTotals:\n{totals(self.cards)}\nCurrent Bet:\n${self.currentbet}\nTotal Winnings: \n${self.winnings}")
             self.game.checkblackjack()

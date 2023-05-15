@@ -34,7 +34,7 @@ def totals(cards):
             return set(acesums)
 
 ornaments = font.Font(family = 'Bodoni Ornaments',size=20)
-acefont = font.Font(family = 'Courier New',size=80)
+acefont = font.Font(family = 'Lucida Blackletter',size=120)
 
 class Card:
     def __init__(self,name):
@@ -82,8 +82,7 @@ class Card:
                 if int(self.rank)%2 != 0:  
                     cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font= 'Batang 16 bold')
             else:
-                cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font= acefont)
-    
+                cardstock.create_text(65,100,text=self.suit,fill=f"{'red' if self.suit in {'♥', '♦'} else 'black'}",font=acefont)    
         cardstock.place(in_= table, relx = position[0], rely = position[1], anchor = CENTER)
     def displayback(self,position):
         cardstock = Canvas(table,bg='red',height=200,width=125)

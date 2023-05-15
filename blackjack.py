@@ -23,7 +23,7 @@ roundcircle = table.create_oval(1200,300,1300,400,width=10)
 roundlabel = Label(table,background='green',foreground='white',text='Round\n    0',font='Futura 16 bold')
 roundlabel.place(x=1220,y=330)
 gametitle = Label(table,background='green',foreground='black',text='BLACKJACK',font='Phosphate 75')
-gametitle.place(x=1000,y=0)
+gametitle.place(x=1000,y=5)
 
 def totals(cards):
             basesum = 0
